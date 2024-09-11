@@ -15,8 +15,8 @@ build/
 
 # Ignore application configuration files (if you keep sensitive information)
 # Uncomment the lines below if you want to ignore local configuration files.
- application.yml
- application.properties
+application.yml
+application.properties
 
 # Ignore IDE-specific files
 # Eclipse
