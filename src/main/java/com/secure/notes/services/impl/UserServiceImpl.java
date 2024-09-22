@@ -1,4 +1,4 @@
-package com.secure.notes.impl;
+package com.secure.notes.services.impl;
 
 import com.secure.notes.dtos.UserDTO;
 import com.secure.notes.models.AppRole;
@@ -11,10 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    
     @Autowired
     UserRepository userRepository;
 
@@ -23,7 +24,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserRole(Long userId, String roleName) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(()
+                -> new RuntimeException("User not found"));
         AppRole appRole = AppRole.valueOf(roleName);
         Role role = roleRepository.findByRoleName(appRole)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
@@ -62,6 +64,12 @@ public class UserServiceImpl implements UserService {
                 user.getCreatedDate(),
                 user.getUpdatedDate()
         );
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        Optional<User> user = userRepository.findByUserName(username);
+        return user.orElseThrow(() -> new RuntimeException("User not found with username: " + username));
     }
 
 

@@ -5,11 +5,10 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 public class LoginResponse {
     private String jwtToken;
-
     private String username;
     private List<String> roles;
 
@@ -18,5 +17,5 @@ public class LoginResponse {
         this.roles = roles;
         this.jwtToken = jwtToken;
     }
-}
 
+}

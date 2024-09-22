@@ -1,4 +1,3 @@
-// NoteController.java
 package com.secure.notes.controllers;
 
 import com.secure.notes.models.Note;

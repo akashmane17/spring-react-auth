@@ -21,11 +21,12 @@ public class AdminController {
 
     @GetMapping("/getusers")
     public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(),
+                HttpStatus.OK);
     }
 
     @PutMapping("/update-role")
-    public ResponseEntity<String> updateUserRole(@RequestParam Long userId,
+    public ResponseEntity<String> updateUserRole(@RequestParam Long userId, 
                                                  @RequestParam String roleName) {
         userService.updateUserRole(userId, roleName);
         return ResponseEntity.ok("User role updated");
@@ -33,6 +34,9 @@ public class AdminController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+        return new ResponseEntity<>(userService.getUserById(id),
+                HttpStatus.OK);
     }
+
+
 }
