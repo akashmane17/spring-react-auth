@@ -6,7 +6,9 @@ import com.secure.notes.models.User;
 import com.secure.notes.repositories.RoleRepository;
 import com.secure.notes.repositories.UserRepository;
 import com.secure.notes.security.jwt.JwtUtils;
+import com.secure.notes.security.request.ForgotPasswordRequest;
 import com.secure.notes.security.request.LoginRequest;
+import com.secure.notes.security.request.ResetPasswordRequset;
 import com.secure.notes.security.request.SignupRequest;
 import com.secure.notes.security.response.LoginResponse;
 import com.secure.notes.security.response.MessageResponse;
@@ -135,6 +137,27 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    @PostMapping("/public/forgot-password")
+    public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        try {
+            System.out.println("Forgot Password");
+            userService.generatePasswordResetToken(request.getEmail());
+            return ResponseEntity.ok(new MessageResponse("Password reset email sent."));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("Error sending password reset email"));
+        }
+    }
+
+    @PostMapping("/public/reset-password")
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequset requset) {
+        try {
+            userService.resetPassword(requset.getToken(), requset.getNewPassword());
+            return ResponseEntity.ok(new MessageResponse("Password reset successfully."));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getMessage()));
+        }
+    }
 
     @GetMapping("/user")
     public ResponseEntity<?> getUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
